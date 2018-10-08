@@ -16,5 +16,11 @@ describe Oystercard do
 		end
 	end
 	
-	describe '#deduct'
+	describe '#deduct' do 
+		it "deduct from balance" do 
+			subject.top_up(10)
+			subject.deduct(5)
+			expect(subject.balance).to eq 5
+		end
+	end
 end
