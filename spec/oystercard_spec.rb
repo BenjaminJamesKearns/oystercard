@@ -6,9 +6,8 @@ describe Oystercard do
 	
 	describe '#top_up' do 
 		it "tops up balance" do 
-			card = Oystercard.new
-			card.top_up(10)
-			expect(card.balance).to eq 10
+			subject.top_up(10)
+			expect(subject.balance).to eq 10
 		end
 	end
 end
