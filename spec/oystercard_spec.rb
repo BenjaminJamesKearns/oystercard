@@ -12,15 +12,54 @@ describe Oystercard do
 		
 		it "top up over balance limit" do
 			maximum_balance = Oystercard::MAXIMUM_BALANCE
-			expect{subject.top_up(maximum_balance + 1)}.to raise_error 'You cannot top up your balance above £90'
+			expect{subject.top_up(maximum_balance + 1)}.to raise_error "You cannot top up your balance above £#{maximum_balance}"
 		end
 	end
 	
-	describe '#deduct' do 
-		it "deduct from balance" do 
-			subject.top_up(10)
-			subject.deduct(5)
-			expect(subject.balance).to eq 5
-		end
-	end
+	describe '#in_journey?' do
+=begin	
+	  it "checks if in journey when not" do 
+		  expect(subject).not_to be_in_journey
+	  end
+  end
+	describe '#touch_in' do 
+	  it "card touches in and changes journey to true" do 
+	  	subject.top_up(1)
+	   	subject.touch_in 
+	    expect(subject).to be_in_journey 
+  	end
+  	
+  	it 'cant touch in if balance below minimum_balance' do 
+  		minimum_balance = Oystercard::MINIMUM_BALANCE
+  		expect{subject.touch_in}.to raise_error "You need £#{minimum_balance} to travel"
+  	end
+=end
+  	
+  	it 'touch_in expects station name' do 
+  		expect(subject).to respond_to(:touch_in).with(1).arguments
+  	end
+  	
+  	it 'remembers station' do 
+  		subject.top_up(1)
+  		subject.touch_in("wallington")
+  		expect(subject.station).to eq "wallington"
+  	end
+  end
+=begin 
+  describe '#touch_out' do 
+    it 'card touches out and changes journey to false' do
+    	subject.top_up(1)
+      subject.touch_in 
+      subject.touch_out
+      expect(subject).not_to be_in_journey
+    end
+    
+    it 'balance reduced by minimum_balance when touching out' do 
+    	minimum_balance = Oystercard::MINIMUM_BALANCE
+    	subject.top_up(10)
+      subject.touch_in 
+      expect{subject.touch_out}.to change{subject.balance}.by(-minimum_balance)
+    end
+  end
+=end
 end
