@@ -55,5 +55,11 @@ describe Oystercard do
       subject.touch_in(station)
       expect{subject.touch_out}.to change{subject.balance}.by(-minimum_balance)
     end
+    it 'station is nil when touch out of station' do 
+    	subject.top_up(1)
+    	subject.touch_in(station)
+    	subject.touch_out
+    	expect(subject.entry_station).to eq nil 
+    end
   end
 end
