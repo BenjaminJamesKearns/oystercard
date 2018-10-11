@@ -5,7 +5,7 @@ class Oystercard
 	MINIMUM_BALANCE = 1
 	def initialize 
 		@balance = 0
-		@journeys = [{}]
+		@journeys = []
 		@journey = false
 	end
 	

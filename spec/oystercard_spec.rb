@@ -3,6 +3,7 @@ describe Oystercard do
 	let(:entry_station){"leatherhead"}
 	let(:exit_station){"wallington"}
 	let(:journey){{entry_station: entry_station, exit_station: exit_station}}
+	
 	it "checks the balance" do
 		expect(subject.balance).to eq 0
 	end
@@ -43,25 +44,25 @@ describe Oystercard do
   describe '#touch_out' do 
     it 'card touches out and changes journey to false' do
     	subject.top_up(1)
-      subject.touch_out(entry_station)
+      subject.touch_in(entry_station)
       subject.touch_out(exit_station)
       expect(subject).not_to be_in_journey
     end
     it 'balance reduced by minimum_balance when touching out' do 
     	minimum_balance = Oystercard::MINIMUM_BALANCE
     	subject.top_up(10)
-      subject.touch_out(entry_station)
+      subject.touch_in(entry_station)
       expect{subject.touch_out(exit_station)}.to change{subject.balance}.by(-minimum_balance)
     end
     it 'station is nil when touch out of station' do 
     	subject.top_up(1)
-    	subject.touch_out(entry_station)
+    	subject.touch_in(entry_station)
     	subject.touch_out(exit_station)
     	expect(subject.journeys[-1][:exit_station]).to eq exit_station
     end
   end
   it 'journey list is empty by default' do 
-  	expect(subject.journeys).to eq [{}]
+  	expect(subject.journeys).to be_empty
   end
   it 'touching in and out creates a journey' do 
   	subject.top_up(1)
