@@ -42,7 +42,7 @@ describe Oystercard do
   	it 'remembers station' do 
   		subject.top_up(1)
   		subject.touch_in("wallington")
-  		expect(subject.station).to eq "wallington"
+  		expect(subject.in_journey?).to eq "wallington"
   	end
   end
 =begin 

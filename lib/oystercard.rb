@@ -19,7 +19,7 @@ class Oystercard
 	
 	def touch_in(station)
 		fail "You need £#{MINIMUM_BALANCE} to travel" if @balance < MINIMUM_BALANCE
-		@journey = true
+		@journey = station
 	end
 	
 	def touch_out
